@@ -1,6 +1,5 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { ProductPage } from '../pages/productPage';
 import { loginAsStandardUser } from '../utils/loginHelper';
 import { HeaderComponent } from '../components/header/navbar/headerComponent';
@@ -16,7 +15,6 @@ test.describe('Product Function', () =>{
     test('TC-007 : Adding all available products to the cart and then removing them, verifying that the cart updates correctly',async ({page}) =>{
         
         const productPage = new ProductPage(page);
-        const productCardComponent = new ProductCardComponent(page);
         await productPage.addAllProductToCart();
         await expect(productPage.addToCartButton).toHaveCount(0);
         
@@ -81,7 +79,6 @@ test.describe('Product Function', () =>{
         const productPrice = await productCardComponent.getAllProductPrice();
 
         //convert price string to number
-                //convert price string to number
         for(let i=0 ; i<productPrice.length ; i++){
             productPrice[i] = parseFloat(productPrice[i].replace('$',''));
         }
@@ -93,7 +90,6 @@ test.describe('Product Function', () =>{
     });
 
     test('TC-012 : Should navigate to the cart page when clicking the cart icon', async ({page}) =>{
-        const productPage = new ProductPage(page);
         const headerComponent = new HeaderComponent(page);
         //click cart button
         await headerComponent.goToCart();

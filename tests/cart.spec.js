@@ -1,11 +1,9 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { ProductPage } from '../pages/productPage';
 import { loginAsStandardUser } from '../utils/loginHelper';
 import { HeaderComponent } from '../components/header/navbar/headerComponent';
 import { CartPage } from '../pages/cartPage';
-import { ProductCardComponent } from '../components/product/productCardComponent';
 
 test.describe('Cart Function', () =>{
 
