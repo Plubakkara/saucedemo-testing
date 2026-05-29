@@ -1,3 +1,5 @@
+import { expect } from "playwright/test";
+
 export class ProductCardComponent {
     constructor(page) {
         this.page = page;
@@ -34,6 +36,7 @@ export class ProductCardComponent {
     async getProductPriceByIndex(index){
         return await this.productPrice.nth(index).textContent();
     }
+
     //get information of product by index
     async getProductInfoByIndex(index){
         const name = await this.productName.nth(index).textContent();
@@ -41,4 +44,13 @@ export class ProductCardComponent {
         return {name, price};
     }
 
+    //check item should be already in your cart.
+    async itemAlreadyInCart(){
+        await expect(this.productName).toHaveCount(1);
+    }
+
+    //check cart empty
+    async cartEmpty(){
+        await expect(this.productName).toHaveCount(0);
+    }
 }
