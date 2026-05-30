@@ -30,7 +30,7 @@ test.describe('Checkout Information Page', () => {
         await expect(page).toHaveURL(/cart/);
     })
 
-    test.only('TC-019 : When clicking "Continue" without any client information, should display an error message' , async ({page})=>{
+    test('TC-019 : When clicking "Continue" without any client information, should display an error message' , async ({page})=>{
        
         const headerComponent = new HeaderComponent(page);
         const cartPage = new CartPage(page);
@@ -48,6 +48,52 @@ test.describe('Checkout Information Page', () => {
 
         //expect error
         await expect(checkoutInformationPage.errorMessage).toBeVisible();
+    });
+    test('TC-020 : When clicking "Continue" with some client information, should display an error message' , async ({page})=>{
+
+        const headerComponent = new HeaderComponent(page);
+        const cartPage = new CartPage(page);
+        const checkoutInformationPage = new CheckoutInformationPage(page);
+
+        //go to cart page
+        await headerComponent.goToCart();
+
+        //go to checkout page
+        await cartPage.checkout();
+        await expect(page).toHaveURL(/checkout-step-one/);
+
+        //fill checkout form
+        await checkoutInformationPage.submitCheckoutInformation('Emily','','');
+
+        //expect error
+        await expect(checkoutInformationPage.errorMessage).toBeVisible();
+
+        //fill checkout form again
+        await checkoutInformationPage.submitCheckoutInformation('Emily','Harrison','');
+
+        //expect error
+        await expect(checkoutInformationPage.errorMessage).toBeVisible();
+
+    });
+    
+    test('TC-021 : When clicking "Continue" with all client information, should proceed to the checkout overview page' , async ({page})=>{
+
+        const headerComponent = new HeaderComponent(page);
+        const cartPage = new CartPage(page);
+        const checkoutInformationPage = new CheckoutInformationPage(page);
+
+        //go to cart page
+        await headerComponent.goToCart();
+
+        //go to checkout page
+        await cartPage.checkout();
+        await expect(page).toHaveURL(/checkout-step-one/);
+
+        //fill checkout form
+        await checkoutInformationPage.submitCheckoutInformation('Emily','Harrison','90210');
+
+        //expect url
+        await expect(page).toHaveURL(/checkout-step-two/);
     });
 
  });

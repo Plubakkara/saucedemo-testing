@@ -1,6 +1,8 @@
 import { ProductCardComponent } from "../components/product/productCardComponent";
+import { HeaderComponent } from "../components/header/navbar/headerComponent";
 
 export class CartPage {
+
     constructor(page){
         this.page = page;
         this.cartNumber = page.locator('[data-test="shopping-cart-badge"]');
@@ -8,12 +10,13 @@ export class CartPage {
         this.removeItemLocator = page.locator('[data-test^="remove"]');
         this.continueShoppingLocator = page.locator('[data-test="continue-shopping"]');
         this.checkoutLocator = page.locator('[data-test="checkout"]');
+        this.headerComponent = new HeaderComponent(page);
     }
 
     // Get number of items in cart
     async getNumberOfItemsInCart(){
-        const cartNumberText = await this.cartNumber.textContent();
-        return parseInt(cartNumberText);
+        const cartNumberText = await this.headerComponent.cartNumber.textContent();
+        return parseInt(cartNumberText,10);
     }
 
     // Get cart product info
